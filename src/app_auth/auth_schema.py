@@ -2,9 +2,6 @@
 import datetime
 from pydantic import BaseModel, EmailStr, field_validator
 
-
-from .auth_models import Role
-
 class LoginUser(BaseModel):
     
     email: EmailStr
@@ -35,7 +32,6 @@ class ShowUser(BaseModel):
     email: EmailStr
     
     
-    created_at: datetime.datetime
     dob: datetime.date
 
 class ShowUserWithToken(BaseModel):

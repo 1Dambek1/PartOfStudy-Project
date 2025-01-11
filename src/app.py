@@ -1,10 +1,17 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from sqlalchemy.ext.asyncio import AsyncSession
-from .db import session,engine,Base
+from .db import engine,Base
+from .app_auth.auth_router import app as auth_app
+
+from .prodcuts.products_models import Product, Category, SubCategory
+from .seller.seller_models import SellerProfile, SellerProduct
+
+
 app = FastAPI()
 
 # routers
+app.include_router(auth_app)
+
 
 # CORS
 
@@ -26,6 +33,7 @@ app.add_middleware(
 
 
 # init project
+@app.get("/init")
 async def create_db():
     
     async with engine.begin() as conn:
