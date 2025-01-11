@@ -48,6 +48,7 @@ class SellerProduct(Base):
     description:Mapped[str]
     price:Mapped[float]
     currency:Mapped[CurrencyType] = mapped_column(default=CurrencyType.RUB)
+    selling:Mapped[int] = mapped_column(default=0)
     
     img:Mapped[str]  = mapped_column(nullable=True)
 
