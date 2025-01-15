@@ -37,6 +37,8 @@ class SellerProfile(Base):
     
     is_confirmed:Mapped[bool] = mapped_column(default=False)
     
+    user:Mapped["User"] = relationship(back_populates="profile", uselist=False)
+    
     products:Mapped[list["SellerProduct"]] = relationship(uselist=True, back_populates="sellerProfile")
     
     

@@ -1,13 +1,15 @@
 import datetime
 import typing
 
-from sqlalchemy import text
-from sqlalchemy.orm import  Mapped, mapped_column
+from sqlalchemy import ForeignKey, text
+from sqlalchemy.orm import  Mapped, mapped_column,relationship
 
 from ..db import Base
 
+import typing
 
-
+if typing.TYPE_CHECKING:
+    from ..seller.seller_models import SellerProfile
 
 class User(Base):
     
@@ -23,6 +25,9 @@ class User(Base):
     name:Mapped[str]
     surname:Mapped[str]
     dob:Mapped[datetime.date]
+    
+    profile_id:Mapped[int] = mapped_column(ForeignKey("seller_profile_table.id"), nullable=True)
+    profile:Mapped["SellerProfile"] = relationship(back_populates="user", uselist=False)
 
     
     
