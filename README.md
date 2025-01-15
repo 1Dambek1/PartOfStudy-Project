@@ -13,9 +13,21 @@ tasks
 [ + ] - SubCategory
 [ + ] - Product
 
-- [ ]  backet
+seller
+
+- [ + ] create product
+- [ + ] create seller profile
+- [ + ] create seller product
+- [ ] - rating(with client)
+
+
+ client
+
+- [ ] reviews
+- [ ] backet
 - [ ] chats
 - [ ] orders
-- [ ] create product
 - [ ] Оплата
 
+
+IMG

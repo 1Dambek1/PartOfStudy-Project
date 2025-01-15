@@ -25,7 +25,7 @@ async def get_profiles(session:AsyncSession = Depends(get_session)):
     profiles = await session.scalars(select(SellerProfile))
     return profiles.all()
 
-@app.get("/profile/{id}")
+@app.get("/profiles/{id}")
 async def get_profile(id:int, session:AsyncSession = Depends(get_session)):
     profile = await session.scalar(select(SellerProfile).where(SellerProfile.id == id).options(selectinload(SellerProfile.products)))
     return profile
@@ -48,9 +48,14 @@ async def create_profile(data:CreateSellerProfile,user:User = Depends(get_curren
     
     return newProfile
 
+@app.get("/profile")
+async def get_profile(user:User = Depends(get_current_user), session:AsyncSession = Depends(get_session)):
+    return user.profile
 
-@p
-
+@app.get("/profile/products")
+async def get_products(user = Depends(get_current_confirm_seller), session:AsyncSession = Depends(get_session)):
+    products = await session.scalars(select(SellerProduct).where(SellerProduct.sellerProfile == user.profile).options(selectinload(SellerProduct.product)))
+    return products.all()
 
 # CRUD seller products
 
