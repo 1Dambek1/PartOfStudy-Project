@@ -40,6 +40,7 @@ async def get_current_user(user_id = Depends(get_current_id),connection:AsyncSes
 
     return user
 
+
 async def get_current_confirm_seller(user:User = Depends(get_current_user)):
     
     if not user.profile:

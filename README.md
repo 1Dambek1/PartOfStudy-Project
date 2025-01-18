@@ -16,13 +16,14 @@ seller
 - [ + ] create product
 - [ + ] create seller profile
 - [ + ] create seller product
-- [ ] - rating(with client)
+- [] - rating(with client)
 
 
  client
 
-- [ ] reviews
-- [ ] backet
+- [ + ] reviews
+- [ + ] backet
+
 - [ ] chats
 - [ ] orders
 - [ ] Оплата

@@ -3,11 +3,13 @@ from fastapi.middleware.cors import CORSMiddleware
 from .db import engine,Base
 from .app_auth.auth_router import app as auth_app
 from .seller.seller_router import app as seller_app
+from .client.client_router import app as client_app
 
 from .admin_panel.admin_router import app as admin_app
 
 from .prodcuts.products_models import Product, Category, SubCategory
 from .seller.seller_models import SellerProfile, SellerProduct
+from .client.client_models import ClientBacket
 
 
 app = FastAPI()
@@ -15,6 +17,8 @@ app = FastAPI()
 # routers
 app.include_router(auth_app)
 app.include_router(seller_app)
+app.include_router(client_app)
+
 
 # ADMIN PANEL
 

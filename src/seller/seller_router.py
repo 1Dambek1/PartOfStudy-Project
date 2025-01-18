@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy import select
+from sqlalchemy import select, func
 from sqlalchemy.orm import selectinload
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -22,7 +22,7 @@ async def get_products(session:AsyncSession = Depends(get_session)):
 
 @app.get("/profiles")
 async def get_profiles(session:AsyncSession = Depends(get_session)):
-    profiles = await session.scalars(select(SellerProfile))
+    profiles = await session.scalars(select((SellerProfile)).options(selectinload(SellerProfile.products).selectinload(SellerProduct.reviews)))
     return profiles.all()
 
 @app.get("/profiles/{id}")
