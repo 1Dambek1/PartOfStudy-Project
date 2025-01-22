@@ -33,15 +33,24 @@ async def login_user(data:LoginUser,session:AsyncSession = Depends(get_session))
                 return {"token":user_token}
 
     raise HTTPException(status_code=401, detail={
-                "data":"user is not exists",
+                "details":"user is not exists",
                 "status":401
         })
         
 # register
 @app.post("/register", response_model=ShowUserWithToken)
 async def register_user(data:RegisterUser ,session:AsyncSession = Depends(get_session)):
-    data_dict = data.model_dump()
     
+    isUserEx = await session.scalar(select(User).where(User.email == data.email))
+    
+    if isUserEx:
+        raise HTTPException(status_code=411, detail={
+        "status":411,
+        "data":"user is exists"
+        })
+        
+    data_dict = data.model_dump()
+        
     data_dict["password"] = await decode_password(password=data.password)
     
     user = User(**data_dict)
@@ -68,8 +77,7 @@ async def update_user(data:UpdateUser,me:User = Depends(get_current_user) ,sessi
         me.name = data.name
     if data.surname:
         me.surname = data.surname    
-    if data.password:
-        me.password = await decode_password(password=data.password)
+
 
     await session.commit()
     await session.refresh(me)

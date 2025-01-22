@@ -2,13 +2,12 @@ from fastapi import APIRouter, Depends
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-
 from src.db import get_session
 from src.seller.seller_models import SellerProfile
 from src.prodcuts.products_models import Product,SubCategory,Category
 
-
 app = APIRouter(prefix="/admin", tags=["admin"])
+
 @app.post("/confirm/all")
 async def confirm_all( session:AsyncSession = Depends(get_session)):
     
@@ -16,7 +15,7 @@ async def confirm_all( session:AsyncSession = Depends(get_session)):
     for profile in profiles:
         profile.is_confirmed = True
     await session.commit()
-    return True
+    return {"status":"200"}
 
 @app.post("/category")
 async def create_category(name:str, session:AsyncSession = Depends(get_session)):
@@ -24,15 +23,18 @@ async def create_category(name:str, session:AsyncSession = Depends(get_session))
     
     session.add(newCategory)
     await session.commit()
+    await session.refresh(newCategory)
     return newCategory
 
 @app.post("/Subcategory")
 async def create_Subcategory(name:str,category_id:int, session:AsyncSession = Depends(get_session)):
-    newCategory = SubCategory(name=name, category_id=category_id)
+    newSubCategory = SubCategory(name=name, category_id=category_id)
     
-    session.add(newCategory)
+    session.add(newSubCategory)
     await session.commit()
-    return newCategory
+    await session.refresh(newSubCategory)
+    
+    return newSubCategory
 
 @app.post("/product/create")
 async def create_product(name:str, description:str, subCategory_id:int, session:AsyncSession = Depends(get_session)):
@@ -40,4 +42,6 @@ async def create_product(name:str, description:str, subCategory_id:int, session:
     
     session.add(newProduct)
     await session.commit()
+    await session.refresh(newProduct)
+    
     return newProduct

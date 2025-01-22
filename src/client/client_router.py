@@ -36,7 +36,7 @@ async def get_reviews(user_id:int = Depends(get_current_id), session:AsyncSessio
     if not user:
         
             raise HTTPException(status_code=426, detail={
-                "token":"Your token is not valid",
+                "details":"Your token is not valid",
                 "status":426
             })
 
@@ -105,5 +105,6 @@ async def delete_backet(id:int, user:User = Depends(get_current_user), session:A
         user.backet.remove(product)
 
         await session.commit()
-        return True
-    return False
+        return {"status":200, "product":"add"}
+    
+    return {"status":200, "product":"remove"}

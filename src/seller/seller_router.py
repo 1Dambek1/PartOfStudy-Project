@@ -76,9 +76,9 @@ async def delete_product(id:int, user:User = Depends(get_current_confirm_seller)
     product = await session.scalar(select(SellerProduct).where(SellerProduct.id == id).options(selectinload(SellerProduct.sellerProfile)))
     if product.sellerProfile != user.profile:
         raise HTTPException(status_code=403, detail={    
-            "token":"You are not the seller of this product",
+            "details":"You are not the seller of this product",
             "status":403
         })
     await session.delete(product)
     await session.commit()
-    return True
+    return {"status":200}
