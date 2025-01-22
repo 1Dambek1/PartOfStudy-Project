@@ -1,21 +1,18 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 
-from ..db import get_session
-from ..app_auth.auth_models import User
-from ..seller.seller_models import SellerProfile
-from ..prodcuts.products_models import Product,SubCategory,Category
-from ..get_current_me import get_current_user
+from src.db import get_session
+from src.seller.seller_models import SellerProfile
+from src.prodcuts.products_models import Product,SubCategory,Category
 
 
 app = APIRouter(prefix="/admin", tags=["admin"])
-
 @app.post("/confirm/all")
 async def confirm_all( session:AsyncSession = Depends(get_session)):
     
-    profiles = await session.scalars(select(SellerProfile).where(SellerProfile.is_confirmed == False))
+    profiles = await session.scalars(select(SellerProfile).where(not SellerProfile.is_confirmed))
     for profile in profiles:
         profile.is_confirmed = True
     await session.commit()
@@ -30,7 +27,7 @@ async def create_category(name:str, session:AsyncSession = Depends(get_session))
     return newCategory
 
 @app.post("/Subcategory")
-async def create_category(name:str,category_id:int, session:AsyncSession = Depends(get_session)):
+async def create_Subcategory(name:str,category_id:int, session:AsyncSession = Depends(get_session)):
     newCategory = SubCategory(name=name, category_id=category_id)
     
     session.add(newCategory)

@@ -1,16 +1,13 @@
 import datetime
 import typing
 
-from sqlalchemy import ForeignKey, text
+from sqlalchemy import ForeignKey
 from sqlalchemy.orm import  Mapped, mapped_column,relationship
 
-from ..db import Base
-
-import typing
+from src.db import Base
 
 if typing.TYPE_CHECKING:
-    from ..seller.seller_models import SellerProfile, Review,SellerProduct
-    from ..client.client_models import ClientBacket
+    from src.seller.seller_models import SellerProfile, Review,SellerProduct
 
 class User(Base):
     

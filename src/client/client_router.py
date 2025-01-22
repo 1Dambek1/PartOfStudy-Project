@@ -4,12 +4,15 @@ from sqlalchemy.orm import selectinload
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from .client_schema import CreateReview
-from ..db import get_session
-from ..app_auth.auth_models import User
 
-from ..get_current_me import get_current_user,get_current_id
-from ..prodcuts.products_models import Product,SubCategory,Category
-from ..seller.seller_models import SellerProfile,SellerProduct, Review
+from src.db import get_session
+from src.app_auth.auth_models import User
+
+from src.types.ProductType import ProductType
+
+from src.get_current_me import get_current_user,get_current_id
+from src.seller.seller_models import SellerProduct, Review
+
 from .client_models import ClientBacket
 
 app = APIRouter(prefix="/client", tags=["client"])
@@ -19,7 +22,7 @@ async def get_products(session:AsyncSession = Depends(get_session)):
     products = await session.scalars(select(SellerProduct).options(selectinload(SellerProduct.product), selectinload(SellerProduct.sellerProfile)))
     return products.all()
     
-@app.post("/reviews/create")
+@app.post("/products/reviews/create")
 async def create_review(data:CreateReview, user:User = Depends(get_current_user), session:AsyncSession = Depends(get_session)):
     review = Review(text=data.text,is_positive=data.is_positive,seller_product_id=data.seller_product_id, user_id=user.id)
     session.add(review)
@@ -27,7 +30,7 @@ async def create_review(data:CreateReview, user:User = Depends(get_current_user)
     await session.refresh(review)
     return review
 
-@app.get("/reviews")
+@app.get("/products/reviews")
 async def get_reviews(user_id:int = Depends(get_current_id), session:AsyncSession = Depends(get_session)):
     user = await session.scalar(select(User).options(selectinload(User.reviews)).where(User.id == user_id))
     if not user:
@@ -40,7 +43,7 @@ async def get_reviews(user_id:int = Depends(get_current_id), session:AsyncSessio
     return user.reviews
 
 
-@app.delete("/reviews/delete/{id}")
+@app.delete("/products/reviews/delete/{id}")
 async def delete_review(id:int, user:User = Depends(get_current_user), session:AsyncSession = Depends(get_session)):
     review = await session.scalar(select(Review).where(Review.id == id, Review.user_id == user.id))
     if not review:
@@ -90,7 +93,7 @@ async def update_backet(id:int, user:User = Depends(get_current_user), session:A
     return True
 
 @app.delete("/backet/delete/{id}")
-async def update_backet(id:int, user:User = Depends(get_current_user), session:AsyncSession = Depends(get_session)):
+async def delete_backet(id:int, user:User = Depends(get_current_user), session:AsyncSession = Depends(get_session)):
     product = await session.scalar(select(SellerProduct).where(SellerProduct.id == id))
     if not product:
         

@@ -1,3 +1,4 @@
+from binascii import Error
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from .db import engine,Base
@@ -50,8 +51,8 @@ async def create_db():
     async with engine.begin() as conn:
         try:
             await conn.run_sync(Base.metadata.drop_all)
-        except:
-            pass
+        except Error as e:
+            print(e)
         await  conn.run_sync(Base.metadata.create_all)
 
 

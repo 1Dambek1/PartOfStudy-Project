@@ -1,4 +1,5 @@
 
+from binascii import Error
 import datetime
 from fastapi import HTTPException
 import jwt
@@ -38,9 +39,9 @@ async def valid_access_token(
     
         try:
             payload = jwt.decode(jwt = token, key=public_key, algorithms=[algorithm])
-        except:
+        except Error as e:
             raise HTTPException(status_code=401, detail={
-                "token":"this token is not valid",
+                "token":e,
                 "status":401
         })
             

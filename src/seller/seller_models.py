@@ -1,16 +1,15 @@
 
 import typing
-from sqlalchemy import ForeignKey, text
+from sqlalchemy import ForeignKey
 from sqlalchemy.orm import  Mapped, mapped_column, relationship
 
-from ..types.currencyType import CurrencyType
+from src.types.currencyType import CurrencyType
 
-from ..db import Base
+from src.db import Base
 
 if typing.TYPE_CHECKING:
-    from ..prodcuts.products_models import Product
-    from ..app_auth.auth_models import User
-    from ..client.client_models import ClientBacket
+    from src.prodcuts.products_models import Product
+    from src.app_auth.auth_models import User
     
 
 
