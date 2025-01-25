@@ -9,8 +9,8 @@ from src.db import get_session
 
 from .auth_schema import RegisterUser, LoginUser, ShowUser, ShowUserWithToken, UpdateUser
 from .auth_utils.utils import decode_password, check_password, create_access_token
-from .auth_models import User
 
+from src.models.UserModel import User
 
 
 

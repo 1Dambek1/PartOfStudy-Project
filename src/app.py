@@ -5,12 +5,25 @@ from .db import engine,Base
 from .app_auth.auth_router import app as auth_app
 from .seller.seller_router import app as seller_app
 from .client.client_router import app as client_app
+from .orders.orders_router import app as orders_app
 
 from .admin_panel.admin_router import app as admin_app
 
-from .prodcuts.products_models import Product, Category, SubCategory
-from .seller.seller_models import SellerProfile, SellerProduct
-from .client.client_models import ClientBacket
+from src.models.products_models.ProductModel import Product
+from src.models.products_models.CategoryModel import Category
+from src.models.products_models.SubCategoryModel import SubCategory
+from src.models.seller_models.SellerProfileModel import SellerProfile
+from src.models.seller_models.SellerProductModel import SellerProduct
+from src.models.ClientBacketModel import ClientBacket
+from src.models.OrdersModel import Orders, OrdersSellerProduct
+
+
+
+
+
+
+
+
 
 
 app = FastAPI()
@@ -19,7 +32,7 @@ app = FastAPI()
 app.include_router(auth_app)
 app.include_router(seller_app)
 app.include_router(client_app)
-
+app.include_router(orders_app)
 
 # ADMIN PANEL
 

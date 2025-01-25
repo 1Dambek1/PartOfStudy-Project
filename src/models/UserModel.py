@@ -7,7 +7,10 @@ from sqlalchemy.orm import  Mapped, mapped_column,relationship
 from src.db import Base
 
 if typing.TYPE_CHECKING:
-    from src.seller.seller_models import SellerProfile, Review,SellerProduct
+    from src.models.seller_models.SellerProductModel import SellerProduct
+    from src.models.seller_models.SellerProfileModel import SellerProfile
+    from src.models.seller_models.ReviewModel import Review
+    from .OrdersModel import Orders
 
 class User(Base):
     
@@ -30,3 +33,6 @@ class User(Base):
     reviews:Mapped[list["Review"]] = relationship(uselist=True, back_populates="user")
     
     backet:Mapped[list["SellerProduct"]] = relationship(uselist=True, back_populates="backets", secondary="client_backet_table")
+
+
+    orders:Mapped[list["Orders"]] = relationship(uselist=True, back_populates="user")

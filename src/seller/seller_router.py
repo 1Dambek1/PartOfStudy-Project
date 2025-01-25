@@ -6,14 +6,18 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from .seller_schema import CreateProduct, CreateSellerProfile
 
 from src.db import get_session
-from src.app_auth.auth_models import User
 
 from src.get_current_me import get_current_user,get_current_confirm_seller
-from src.prodcuts.products_models import Product,SubCategory
 
 from src.types.ProductType import ProductType
 
-from .seller_models import SellerProfile,SellerProduct
+
+from src.models.UserModel import User
+from src.models.seller_models.SellerProductModel import SellerProduct
+from src.models.seller_models.SellerProfileModel import SellerProfile
+
+from src.models.products_models.ProductModel import Product
+from src.models.products_models.SubCategoryModel import SubCategory
 
 app = APIRouter(prefix="/seller", tags=["seller"])
 

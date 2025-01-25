@@ -6,14 +6,13 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from .client_schema import CreateReview
 
 from src.db import get_session
-from src.app_auth.auth_models import User
-
-from src.types.ProductType import ProductType
 
 from src.get_current_me import get_current_user,get_current_id
-from src.seller.seller_models import SellerProduct, Review
 
-from .client_models import ClientBacket
+from src.models.seller_models.SellerProductModel import SellerProduct
+from src.models.seller_models.ReviewModel import Review
+from src.models.UserModel import User
+from src.models.ClientBacketModel import ClientBacket
 
 app = APIRouter(prefix="/client", tags=["client"])
 
@@ -69,7 +68,10 @@ async def get_backet(user:User = Depends(get_current_user), session:AsyncSession
                                 .options(selectinload(ClientBacket.product))
                                 .where(ClientBacket.user_id == user.id)) 
     data={
-        "user":user,
+        "user":{
+            "user_id":user.id,
+            "name":user.name,
+            },
         "total_price":total_price,
         "backet":[{"all_price":res[1],"backet":res[0] } for res in backet.all()] 
     }

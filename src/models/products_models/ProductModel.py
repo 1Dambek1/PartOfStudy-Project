@@ -6,26 +6,12 @@ from sqlalchemy.orm import  Mapped, mapped_column, relationship
 from src.db import Base
 
 if typing.TYPE_CHECKING:
-    from src.seller.seller_models import SellerProduct
+    from .SubCategoryModel import SubCategory
+    from src.models.seller_models.SellerProductModel import SellerProduct
     
-class Category(Base):
-    __tablename__ = "category_table"
+
     
-    id:Mapped[int] = mapped_column(primary_key=True)    
-    name:Mapped[str]
-    
-    subCategories:Mapped[list["SubCategory"]] = relationship(uselist=True, back_populates="category")
-    
-class SubCategory(Base):
-    __tablename__ = "subcategory_table"
-    
-    id:Mapped[int] = mapped_column(primary_key=True)    
-    name:Mapped[str]
-    
-    category_id:Mapped[int] = mapped_column(ForeignKey("category_table.id", ondelete="CASCADE"))
-    
-    category:Mapped["Category"] = relationship(back_populates="subCategories", uselist=False)
-    
+
 
 
 class Product(Base):

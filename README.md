@@ -27,8 +27,9 @@ seller
 - [ + ] reviews
 - [ + ] backet
 
+- [ + ] orders
+
 - [ ] chats
-- [ ] orders
 - [ ] Оплата
 
 

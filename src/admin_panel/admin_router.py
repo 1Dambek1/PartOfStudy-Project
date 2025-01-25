@@ -3,15 +3,20 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.db import get_session
-from src.seller.seller_models import SellerProfile
-from src.prodcuts.products_models import Product,SubCategory,Category
+
+from src.models.seller_models.SellerProfileModel import SellerProfile
+
+from src.models.products_models.ProductModel import Product
+from src.models.products_models.SubCategoryModel import SubCategory
+from src.models.products_models.CategoryModel import Category
+
 
 app = APIRouter(prefix="/admin", tags=["admin"])
 
 @app.post("/confirm/all")
 async def confirm_all( session:AsyncSession = Depends(get_session)):
     
-    profiles = await session.scalars(select(SellerProfile).where(not SellerProfile.is_confirmed))
+    profiles = await session.scalars(select(SellerProfile).where( SellerProfile.is_confirmed == False))
     for profile in profiles:
         profile.is_confirmed = True
     await session.commit()

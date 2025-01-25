@@ -7,8 +7,8 @@ from sqlalchemy.orm import  Mapped, mapped_column, relationship
 from src.db import Base
 
 if typing.TYPE_CHECKING:
-    from src.seller.seller_models import SellerProduct
-    from src.app_auth.auth_models import User
+    from .seller_models.SellerProductModel import SellerProduct
+    from .UserModel import User
     
 
 class ClientBacket(Base):
