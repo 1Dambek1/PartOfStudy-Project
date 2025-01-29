@@ -1,10 +1,7 @@
 # PartOfStudy-Project
 Repository for the PartOfStudy project
 
-
-
 WinMarket
-
 
 tasks
 
@@ -19,7 +16,7 @@ seller
 - [ + ] create product
 - [ + ] create seller profile
 - [ + ] create seller product
-- [] - rating(with client)
+
 
 
  client
@@ -29,8 +26,10 @@ seller
 
 - [ + ] orders
 
-- [ ] chats
-- [ ] Оплата
+- [ + ] chats
 
 
-IMG
+- [ ] - rating(with client)(one endpoint)
+- [ ] Оплата(server)
+- [ ] IMG(new theme)
+
