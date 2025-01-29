@@ -8,14 +8,16 @@ from .client.client_router import app as client_app
 from .orders.orders_router import app as orders_app
 
 from .admin_panel.admin_router import app as admin_app
+from .chat.chat_router import app as chat_app
 
-from src.models.products_models.ProductModel import Product
-from src.models.products_models.CategoryModel import Category
-from src.models.products_models.SubCategoryModel import SubCategory
-from src.models.seller_models.SellerProfileModel import SellerProfile
-from src.models.seller_models.SellerProductModel import SellerProduct
-from src.models.ClientBacketModel import ClientBacket
-from src.models.OrdersModel import Orders, OrdersSellerProduct
+# from src.models.products_models.ProductModel import Product
+# from src.models.products_models.CategoryModel import Category
+# from src.models.products_models.SubCategoryModel import SubCategory
+# from src.models.seller_models.SellerProfileModel import SellerProfile
+# from src.models.seller_models.SellerProductModel import SellerProduct
+# from src.models.ClientBacketModel import ClientBacket
+# from src.models.OrdersModel import Orders, OrdersSellerProduct
+# from src.models.ChatModel import Chat, Message
 
 
 
@@ -33,12 +35,14 @@ app.include_router(auth_app)
 app.include_router(seller_app)
 app.include_router(client_app)
 app.include_router(orders_app)
+app.include_router(chat_app)
 
 # ADMIN PANEL
 
 app.include_router(admin_app)
 
 # CORS
+
 
 origins = [
     "http://localhost:3000",

@@ -1,6 +1,6 @@
-
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from fastapi import Depends, HTTPException
+from fastapi.websockets import WebSocket
 
 from sqlalchemy import select
 from sqlalchemy.orm import selectinload
@@ -56,5 +56,31 @@ async def get_current_confirm_seller(user:User = Depends(get_current_user)):
         })
         
     return user
+
+async def get_current_user_ws(websocket: WebSocket, session: AsyncSession = Depends(get_session)):
+    try:
+        # Получаем токен из заголовка websocket
+        token = websocket.headers.get('authorization').split(' ')[1]
+        user_id = await valid_access_token(token=token)
+        
+        if not user_id:
+            await websocket.close(code=4001, reason="Invalid token")
+            return None
+            
+        user = await session.scalar(
+            select(User)
+            .options(selectinload(User.profile), selectinload(User.backet))
+            .where(User.id == user_id)
+        )
+        
+        if not user:
+            await websocket.close(code=4001, reason="User not found")
+            return None
+            
+        return user
+        
+    except Exception:
+        await websocket.close(code=4001, reason="Authentication failed")
+        return None
     
     
