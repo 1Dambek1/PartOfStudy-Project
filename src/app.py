@@ -1,6 +1,6 @@
 from binascii import Error
 import os
-from fastapi import FastAPI, File, UploadFile
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from .db import engine,Base
 from .app_auth.auth_router import app as auth_app
@@ -19,7 +19,6 @@ from .chat.chat_router import app as chat_app
 # from src.models.ClientBacketModel import ClientBacket
 # from src.models.OrdersModel import Orders, OrdersSellerProduct
 # from src.models.ChatModel import Chat, Message
-from fastapi.responses import FileResponse
 
 
 
@@ -78,8 +77,6 @@ async def create_db():
 
 
 
-
-import shutil
 
 
 UPLOAD_FOLDER = 'uploads'
