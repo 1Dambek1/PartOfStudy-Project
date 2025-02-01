@@ -1,5 +1,6 @@
 from binascii import Error
-from fastapi import FastAPI
+import os
+from fastapi import FastAPI, File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from .db import engine,Base
 from .app_auth.auth_router import app as auth_app
@@ -18,12 +19,15 @@ from .chat.chat_router import app as chat_app
 # from src.models.ClientBacketModel import ClientBacket
 # from src.models.OrdersModel import Orders, OrdersSellerProduct
 # from src.models.ChatModel import Chat, Message
+from fastapi.responses import FileResponse
 
 
 
 
 
-
+# 010100101010101001010101010
+# 010100101010101001010101010
+#  .jpeg .png .jpg .gif .svg
 
 
 
@@ -72,6 +76,38 @@ async def create_db():
             print(e)
         await  conn.run_sync(Base.metadata.create_all)
 
+
+
+
+import shutil
+
+
+UPLOAD_FOLDER = 'uploads'
+
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+
+# @app.post("/upload")
+# async def upload_file(file_name: str, file: UploadFile = File(...)):
+#     # file_location = f"{UPLOAD_DIR}/{file.filename}"
+#     # with open(file_location, "wb") as buffer:
+#     #     shutil.copyfileobj(file.file, buffer)
+    
+    
+#     file_location = f"{UPLOAD_FOLDER}/{file_name}.png"
+    
+    
+#     with open(file_location, "wb") as f:
+#         f.write(await file.read())
+#     return {"filename": file_name}
+
+
+
+# @app.get("/files")
+# async def get_files(file_name: str):
+#     file_location = f"{UPLOAD_FOLDER}/{file_name}.png"
+#     if not os.path.exists(file_location):
+#         return {"error": "File not found"}
+#     return FileResponse(file_location)
 
 
 

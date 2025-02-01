@@ -28,8 +28,5 @@ seller
 
 - [ + ] chats
 
-
-- [ ] - rating(with client)(one endpoint)
-- [ ] Оплата(server)
 - [ ] IMG(new theme)
 
